@@ -32,5 +32,12 @@ public class ExerciseService {
         return new ResponseEntity<>(workoutExercises, OK);
     }
 
+    public ResponseEntity<Exercise> addExerciseToWorkout(Long workoutId, Exercise exercise) {
+        Workout workout = workoutRepository.findById(workoutId).orElse(null);
+        Exercise returnedExercise = exerciseRepository.save(exercise);
+        workout.getExercises().add(returnedExercise);
+        workoutRepository.save(workout);
+        return new ResponseEntity<>(returnedExercise, OK);
+    }
 
 }

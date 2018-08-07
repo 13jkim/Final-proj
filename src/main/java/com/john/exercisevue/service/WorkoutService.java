@@ -29,4 +29,11 @@ public class WorkoutService {
     public ResponseEntity<Iterable<Workout>> getAllWorkoutsByUser(Long userId) {
         return new ResponseEntity<>(workoutRepository.findByUserId(userId), OK);
     }
+
+    public ResponseEntity<Workout> createWorkout(Long userId, Workout workout) {
+        User user = userRepository.findById(userId).orElse(null);
+        workout.setUser(user);
+        Workout returnedWorkout = workoutRepository.save(workout);
+        return new ResponseEntity<>(returnedWorkout, OK);
+    }
 }

@@ -1,29 +1,34 @@
 package com.john.exercisevue.controller;
 
-import com.john.exercisevue.repository.WorkoutRepository;
 import com.john.exercisevue.domain.Workout;
+import com.john.exercisevue.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/workouts")
 public class WorkoutController {
 
+    private WorkoutService workoutService;
+
     @Autowired
-    private WorkoutRepository workoutRepository;
+    public WorkoutController(WorkoutService workoutService) {
+        this.workoutService = workoutService;
+    }
 
     @GetMapping
-    public Iterable<Workout> findAllWorkouts() {
-        return workoutRepository.findAll();
+    public ResponseEntity<Iterable<Workout>> findAllWorkouts() {
+        return workoutService.getAllWorkouts();
     }
 
-    @GetMapping("/{workoutId}")
-    public Workout findWorkoutById(@PathVariable Long workoutId) {
-        return workoutRepository.findById(workoutId).orElse(null);
+    @GetMapping("/{userId}")
+    public ResponseEntity<Iterable<Workout>> findAllWorkoutsByUserId(@PathVariable Long userId) {
+        return workoutService.getAllWorkoutsByUser(userId);
     }
 
-    @PostMapping
-    public Workout addWorkout(@RequestBody Workout workout) {
-        return workoutRepository.save(workout);
+    @PostMapping("/{userId}")
+    public ResponseEntity<Workout> addWorkout(@PathVariable Long userId, @RequestBody Workout workout) {
+        return workoutService.createWorkout(userId, workout);
     }
 }
