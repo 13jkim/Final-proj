@@ -1,10 +1,13 @@
-package com.john.exercisevue.Workout;
+package com.john.exercisevue.domain;
 
-import com.john.exercisevue.Exercise.Exercise;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.john.exercisevue.domain.Exercise;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,6 +29,12 @@ public class Workout {
     @NotNull
     @Column(name = "workout_name", unique = true, length = 100)
     private String workoutName;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private User user;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE

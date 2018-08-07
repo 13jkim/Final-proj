@@ -1,6 +1,7 @@
-package com.john.exercisevue.Workout;
+package com.john.exercisevue.controller;
 
-import org.hibernate.jdbc.Work;
+import com.john.exercisevue.repository.WorkoutRepository;
+import com.john.exercisevue.domain.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

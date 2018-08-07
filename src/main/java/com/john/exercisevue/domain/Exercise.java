@@ -1,4 +1,4 @@
-package com.john.exercisevue.Exercise;
+package com.john.exercisevue.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
